@@ -6,6 +6,7 @@ function App() {
   const [Avatar, setAvatar] = useState("");
   const [Name, setName] = useState("");
   const [DC, setDC] = useState("");
+  const [currentJob, setCurrentJob] = useState("");
 
   useEffect(() => {
     fetch("https://xivapi.com/character/20315482")
@@ -15,18 +16,22 @@ function App() {
       setAvatar(data.Character.Avatar)
       setName(data.Character.Name)
       setDC(data.Character.DC);
+      setCurrentJob(data.Character.ActiveClassJob.UnlockedState.Name)
     })
     .catch(err => console.log(err))
   }, [])
 
   if (!isReady)
-    return <div className='loading'>Loading character...</div>
+    return <div className="loading">Loading character...</div>
 
   return (
     <div className="App">
-      <img src={Avatar} alt="Character pic" />
-      <p>{Name}</p>
-      <p>{DC}</p>
+      <div className='Character'>
+        <img className='Avatar' src={Avatar} alt="Character pic" />
+        <h2>{Name}</h2>
+        <p>Data Center: {DC}</p>
+        <p>Current Job: {currentJob}</p>
+      </div>
     </div>
   );
 }
