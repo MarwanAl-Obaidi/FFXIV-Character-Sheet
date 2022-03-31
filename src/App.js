@@ -1,23 +1,32 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  const [isReady, setReady] = useState(false);
+  const [Avatar, setAvatar] = useState("");
+  const [Name, setName] = useState("");
+  const [DC, setDC] = useState("");
+
+  useEffect(() => {
+    fetch("https://xivapi.com/character/20315482")
+    .then(response => response.json())
+    .then(data => {
+      setReady(true);
+      setAvatar(data.Character.Avatar)
+      setName(data.Character.Name)
+      setDC(data.Character.DC);
+    })
+    .catch(err => console.log(err))
+  }, [])
+
+  if (!isReady)
+    return <div className='loading'>Loading character...</div>
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <img src={Avatar} alt="Character pic" />
+      <p>{Name}</p>
+      <p>{DC}</p>
     </div>
   );
 }

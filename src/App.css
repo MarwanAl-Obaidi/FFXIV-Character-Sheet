@@ -1,5 +1,15 @@
 .App {
   text-align: center;
+  color: #61dafb;
+}
+
+body {
+  background-color: #282c34;
+}
+
+.loading {
+  text-align: center;
+  color: #61dafb;
 }
 
 .App-logo {
